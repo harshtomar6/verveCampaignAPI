@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/getSummary', (req, res, next) => {
-  
+
 })
 
 router.get('/getVolunteers', (req, res, next) => {
@@ -40,6 +40,41 @@ router.post('/getVolunteerDetail', (req, res, next) => {
 router.post('/allotPasses', (req, res, next) => {
   console.log(req.body);
   db.allotPasses(req.body, (err, success) => {
+    if(err){
+      console.log(err)
+      res.status(500).send({err: err, data: null})
+    }
+    else
+      res.status(200).send({err: null, data: success})
+  })
+})
+
+router.post('/deallotPasses', (req, res, next) => {
+  console.log(req.body);
+  db.deallotPasses(req.body.id, (err, success) => {
+    if(err){
+      console.log(err)
+      res.status(500).send({err: err, data: null})
+    }
+    else
+      res.status(200).send({err: null, data: success})
+  })
+})
+
+router.get('/getRecentActivity', (req, res, next) => {
+  db.getRecentActivity((err, success) => {
+    if(err){
+      console.log(err)
+      res.status(500).send({err: err, data: null})
+    }
+    else
+    res.status(200).send({err: null, data: success})
+  })
+})
+
+router.post('/addRecentActivity', (req, res, next) => {
+  console.log(req.body);
+  db.addRecentActivity(req.body, (err, success) => {
     if(err){
       console.log(err)
       res.status(500).send({err: err, data: null})

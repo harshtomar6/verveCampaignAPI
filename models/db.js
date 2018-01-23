@@ -4,6 +4,7 @@ let schema = require('./schema');
 
 //Models
 let Volunteer = mongoose.model('Volunteer', schema.volunteerSchema);
+let RecentActivity = mongoose.model('RecentActivity', schema.recentActivitySchema);
 
 //Add new Volunteer (Register user)
 let addVolunteer = (data, callback) => {
@@ -63,7 +64,14 @@ let getVolunteerDetail = (id, callback) => {
 //Allot passes
 let allotPasses = (data, callback) => {
   Volunteer.update({_id: data.id}, { passesAlloted: parseInt(data.passes) }, (err, success) => {
-    callback(err, success)
+    callback(err, success);
+  })
+}
+
+//DeAllot passes
+let deallotPasses = (id, callback) => {
+  Volunteer.update({_id: id}, {passesAlloted: 0}, (err, success) => {
+    callback(err, success);
   })
 }
 
@@ -91,6 +99,44 @@ let getTotalPasses = (callback) => {
   })
 }
 
+//Get All Activities
+let getRecentActivity = (callback) => {
+  RecentActivity.find({}, (err, docs) => {
+    callback(err, docs);
+  })
+}
+
+//Add All Activities
+let addRecentActivity = (data, callback) => {
+  let recentActivity = new RecentActivity(data);
+  recentActivity.description = getDescription(data);
+
+  recentActivity.save((err, success) => {
+    callback(err, success);
+  })
+}
+
+//Add description
+let getDescription = (data) => {
+  let description = '';
+
+  switch(data.type){
+    case 'REGISTER':
+      description = `${data.owner} signed up as a Volunteer`;
+      break;
+    case 'PASS_SOLD':
+      description = `${data.owner} sold a Pass`;
+      break;
+    case 'LOGIN':
+      description = `${data.owner} logged in as a volunteer`;
+      break;
+    default:
+      description = 'Unidentified Activity';
+  }
+
+  return description;
+}
+
 //*******  ADMIN FUNCTIONS END *****//
 
 module.exports = {
@@ -98,5 +144,8 @@ module.exports = {
   loginVolunteer,
   getVolunteers,
   getVolunteerDetail,
-  allotPasses
+  allotPasses,
+  deallotPasses,
+  getRecentActivity,
+  addRecentActivity
 }

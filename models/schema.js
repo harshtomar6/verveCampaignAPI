@@ -9,8 +9,15 @@ let volunteerSchema = mongoose.Schema({
   userid : {type: String, required: true},
   phone: {type: String, required: true},
   passesAlloted : {type: Number, default: 0},
-  passesSold : {type: Number, default: 0},
+  passesSold : {type: Number, default: 0}
 });
+
+let recentActivitySchema = mongoose.Schema({
+  type: {type: String, required: true},
+  time: {type: Date, default: Date.now},
+  description: {type: String, required: true},
+  owner: {type: String, required: true}
+})
 
 volunteerSchema.methods.genHash = function(password){
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -21,5 +28,6 @@ volunteerSchema.methods.compareHash = function(password){
 }
 
 module.exports = {
-  volunteerSchema
+  volunteerSchema,
+  recentActivitySchema
 }
