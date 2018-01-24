@@ -102,6 +102,7 @@ let getTotalPasses = (callback) => {
 //Get All Activities
 let getRecentActivity = (callback) => {
   RecentActivity.find({}, (err, docs) => {
+    docs = docs.reverse();
     callback(err, docs);
   })
 }
