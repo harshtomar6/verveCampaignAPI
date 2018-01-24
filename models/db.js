@@ -77,32 +77,43 @@ let deallotPasses = (id, callback) => {
 
 //Get getSummary
 let getSummary = (callback) => {
-
-}
-
-let getTotalPasses = (callback) => {
-  Volunteer.find({}, 'passesSold passesAlloted', (err, success) => {
-    let sum = 0;
+  Volunteer.find({}, (err, success) => {
+    let sum1 = 0, sum2=0;
     let index = 0;
 
-    sucess.forEach(pass => {
+    success.forEach(pass => {
       index++;
       sum1 += pass.passesAlloted
       sum2 += pass.passesSold
 
+
       if(index == success.length)
         callback(err, {
           totalPassesAlloted: sum1,
-          totalPassesSold: sum2
+          totalPassesSold: sum2,
+          totalVolunteersRegistered: success.length
         });
     })
   })
 }
 
-//Get All Activities
+//Get RecentActivity for homeScreen
 let getRecentActivity = (callback) => {
-  RecentActivity.find({}, (err, docs) => {
-    docs = docs.reverse();
+  RecentActivity
+    .find({})
+    .sort({'time': -1})
+    .limit(5)
+    .exec(function(err, docs){
+      callback(err, docs);
+    })
+}
+
+//Get All Activities
+let getAllRecentActivity = (callback) => {
+  RecentActivity
+  .find({})
+  .sort({'time': -1})
+  .exec((err, docs) => {
     callback(err, docs);
   })
 }
@@ -123,13 +134,16 @@ let getDescription = (data) => {
 
   switch(data.type){
     case 'REGISTER':
-      description = `${data.owner} signed up as a Volunteer`;
+      description = `${data.owner.name} signed up as a Volunteer`;
       break;
     case 'PASS_SOLD':
-      description = `${data.owner} sold a Pass`;
+      description = `${data.owner.name} sold a Pass`;
       break;
     case 'LOGIN':
-      description = `${data.owner} logged in as a volunteer`;
+      description = `${data.owner.name} logged in as a volunteer`;
+      break;
+    case 'LOGOUT':
+      description = `${data.owner.name} logged out !`
       break;
     default:
       description = 'Unidentified Activity';
@@ -147,6 +161,8 @@ module.exports = {
   getVolunteerDetail,
   allotPasses,
   deallotPasses,
+  getSummary,
   getRecentActivity,
+  getAllRecentActivity,
   addRecentActivity
 }

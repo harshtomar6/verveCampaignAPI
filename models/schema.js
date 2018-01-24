@@ -16,7 +16,10 @@ let recentActivitySchema = mongoose.Schema({
   type: {type: String, required: true},
   time: {type: Date, default: Date.now},
   description: {type: String, required: true},
-  owner: {type: String, required: true}
+  owner: {
+    id: {type: String, required: true},
+    name: {type: String, required: true}
+  }
 })
 
 volunteerSchema.methods.genHash = function(password){

@@ -14,8 +14,21 @@ router.get('/', (req, res, next) => {
   res.send("Working");
 });
 
-router.get('/getSummary', (req, res, next) => {
-
+router.get('/getHomeData', (req, res, next) => {
+  db.getSummary((err, success1) => {
+    if(err)
+      res.status(500).send({err: err, data: null})
+    else{
+      db.getRecentActivity((err, success2) => {
+        if(err){
+          console.log(err)
+          res.status(500).send({err: err, data: null})
+        }
+        else
+          res.status(200).send({err: null, data: {summary: success1, recentActivity: success2}})
+      })
+    }
+  })
 })
 
 router.get('/getVolunteers', (req, res, next) => {
@@ -61,8 +74,8 @@ router.post('/deallotPasses', (req, res, next) => {
   })
 })
 
-router.get('/getRecentActivity', (req, res, next) => {
-  db.getRecentActivity((err, success) => {
+router.get('/getAllRecentActivity', (req, res, next) => {
+  db.getAllRecentActivity((err, success) => {
     if(err){
       console.log(err)
       res.status(500).send({err: err, data: null})
