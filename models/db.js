@@ -61,6 +61,16 @@ let getVolunteerDetail = (id, callback) => {
   })
 }
 
+//Read Passes Status
+let readPassesStatus = (id, callback) => {
+  Volunteer.findOne({_id: id}, (err, success) => {
+    if(success.passesAlloted > 0)
+      callback(true, success.passesAlloted);
+    else
+      callback(false);
+  })
+}
+
 //Allot passes
 let allotPasses = (data, callback) => {
   Volunteer.update({_id: data.id}, { passesAlloted: parseInt(data.passes) }, (err, success) => {
@@ -159,6 +169,7 @@ module.exports = {
   loginVolunteer,
   getVolunteers,
   getVolunteerDetail,
+  readPassesStatus,
   allotPasses,
   deallotPasses,
   getSummary,
