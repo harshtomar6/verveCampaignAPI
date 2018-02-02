@@ -38,8 +38,10 @@ io.on('connection', (socket) => {
     db.deallotPasses(data.id, (err, success) => {
       if(err)
         socket.emit('err', {err: err, data: null});
-      else
+      else{
         socket.emit('ok', {err: null, success: success});
+        socket.emit('not-alloted');
+      }
     })
   })
 
