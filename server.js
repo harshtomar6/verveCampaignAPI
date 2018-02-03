@@ -49,6 +49,17 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('alloted', {id: data.id})
   })
 
+  socket.on('record-activity', data => {
+    console.log(data);
+    db.addRecentActivity(data, (err, success) => {
+      if(err){
+        console.log(err)
+      }
+      else
+        socket.broadcast.emit('new-activity', data);
+    })
+  })
+
   socket.on('disconnect', () => {console.log('Client Disconnected')});
 })
 
