@@ -40,20 +40,13 @@ io.on('connection', (socket) => {
         socket.emit('err', {err: err, data: null});
       else{
         socket.emit('ok', {err: null, success: success});
-        socket.emit('not-alloted', {});
+        socket.broadcast.emit('not-alloted', {id: data.id});
       }
     })
-
-    socket.emit('test');
   })
-
-  socket.on('read-passes-status', data => {
-    db.readPassesStatus(data.id, (alloted, passes) => {
-      if(alloted)
-        socket.emit('alloted', passes);
-      else
-        socket.emit('not-alloted');
-    })
+  
+  socket.on('allot-passes', data => {
+    socket.broadcast.emit('alloted', {id: data.id})
   })
 
   socket.on('disconnect', () => {console.log('Client Disconnected')});
