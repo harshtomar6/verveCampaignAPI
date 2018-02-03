@@ -40,9 +40,11 @@ io.on('connection', (socket) => {
         socket.emit('err', {err: err, data: null});
       else{
         socket.emit('ok', {err: null, success: success});
-        socket.emit('not-alloted');
+        socket.emit('not-alloted', {});
       }
     })
+
+    socket.emit('test');
   })
 
   socket.on('read-passes-status', data => {
