@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
         console.log(err)
       }
       else
-        socket.broadcast.emit('new-activity', success);
+        io.emit('new-activity', success);
     })
   })
 
