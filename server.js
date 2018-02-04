@@ -37,16 +37,16 @@ io.on('connection', (socket) => {
 
     db.deallotPasses(data.id, (err, success) => {
       if(err)
-        socket.emit('err', {err: err, data: null});
+        io.emit('err', {err: err, data: null});
       else{
-        socket.emit('ok', {err: null, success: success});
-        socket.broadcast.emit('not-alloted', {id: data.id});
+        io.emit('ok', {err: null, success: success});
+        io.emit('not-alloted', {id: data.id});
       }
     })
   })
   
   socket.on('allot-passes', data => {
-    socket.broadcast.emit('alloted', {id: data.id})
+    iot.emit('alloted', {id: data.id})
   })
 
   socket.on('record-activity', data => {
