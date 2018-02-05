@@ -118,4 +118,36 @@ router.post('/loginVolunteer', (req, res, next) => {
   })
 })
 
+router.post('/addParticipant', (req, res, next) => {
+  console.log(req.body);
+  db.addParticipant(req.body, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
+router.get('/getParticipants', (req, res, next) => {
+  db.getParticipants((err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
+router.post('/getParticipantDetails', (req, res, next) => {
+  console.log(req.body);
+  db.getParticipantDetails(req.body.id, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
 module.exports = router;

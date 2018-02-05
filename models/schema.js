@@ -22,6 +22,15 @@ let recentActivitySchema = mongoose.Schema({
   }
 })
 
+let participantSchema = mongoose.Schema({
+  id: {type: String, required: true, unique: true},
+  name: {type: String, required: true},
+  email: {type: String, required: true},
+  phone: {type: String, required: true},
+  college: {type: String, required: true},
+  event: {type: String, required: true}
+})
+
 volunteerSchema.methods.genHash = function(password){
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 }
@@ -32,5 +41,6 @@ volunteerSchema.methods.compareHash = function(password){
 
 module.exports = {
   volunteerSchema,
-  recentActivitySchema
+  recentActivitySchema,
+  participantSchema
 }

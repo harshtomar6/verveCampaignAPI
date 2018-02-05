@@ -5,6 +5,7 @@ let schema = require('./schema');
 //Models
 let Volunteer = mongoose.model('Volunteer', schema.volunteerSchema);
 let RecentActivity = mongoose.model('RecentActivity', schema.recentActivitySchema);
+let Participant = mongoose.model('Participant', schema.participantSchema);
 
 //Add new Volunteer (Register user)
 let addVolunteer = (data, callback) => {
@@ -44,6 +45,57 @@ let loginVolunteer = (data, callback) => {
        }
      }
    })
+}
+
+let addParticipant = (data, callback) => {
+  Participant.find({}, (err, success) => {
+    if(err)
+      callback(err, null);
+    else{
+      let len = success.length;
+      let id = '18VERVE'+getId(len);
+
+      let participant = new Participant(data);
+      participant.id = id;
+
+      participant.save((err, doc) => {
+        if(err)
+          callback(err. null)
+        else{
+          Volunteer.update(
+            {_id: data.ownerid}, 
+            {$inc: {passesSold: 1}},
+            (err, doc2) => {
+              callback(err, doc);
+            }
+          )
+        }
+      })
+    }
+  });
+}
+
+let getId = (len) => {
+  if(len < 10)
+    return '000'+(++len);
+  else if(len >= 10 && len < 100)
+    return '00'+ (++len);
+  else if(len >= 100 && len < 1000)
+    return '0'+ (++len);
+  else
+    return ++len;
+}
+
+let getParticipants = (callback) => {
+  Participant.find({}, (err, success) => {
+    callback(err, success);
+  })
+}
+
+let getParticipantDetails = (id, callback) => {
+  Participant.findOne({id: id}, (err, success) => {
+    callback(err, success);
+  })
 }
 
 // ******   ADMIN FUNCTIONS *********//
@@ -167,6 +219,9 @@ let getDescription = (data) => {
 module.exports = {
   addVolunteer,
   loginVolunteer,
+  addParticipant,
+  getParticipants,
+  getParticipantDetails,
   getVolunteers,
   getVolunteerDetail,
   readPassesStatus,
