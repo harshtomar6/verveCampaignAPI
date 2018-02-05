@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
   })
   
   socket.on('allot-passes', data => {
-    io.emit('alloted', {id: data.id})
+    io.emit('alloted', {id: data.id, passesAlloted: data.passes})
   })
 
   socket.on('record-activity', data => {
