@@ -63,7 +63,7 @@ let addParticipant = (data, callback) => {
           callback(err. null)
         else{
           Volunteer.update(
-            {_id: data.ownerid}, 
+            {_id: data.ownerid},
             {$inc: {passesSold: 1}},
             (err, doc2) => {
               callback(err, doc);
@@ -89,6 +89,12 @@ let getId = (len) => {
 let getParticipants = (callback) => {
   Participant.find({}, (err, success) => {
     callback(err, success);
+  })
+}
+
+let getParticipantsByOwner = (id, callback) => {
+  Participant.find({ownerid: id}, (err, success) => {
+    callback(err, success)
   })
 }
 
@@ -221,6 +227,7 @@ module.exports = {
   loginVolunteer,
   addParticipant,
   getParticipants,
+  getParticipantsByOwner,
   getParticipantDetails,
   getVolunteers,
   getVolunteerDetail,
