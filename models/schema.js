@@ -32,6 +32,26 @@ let participantSchema = mongoose.Schema({
   ownerid: {type: String, required: true}
 })
 
+let eventSchema = mongoose.Schema({
+  name: {type: String, required: true},
+  team: {type: String, required: true},
+  ticket: {type: Number, required: true},
+  type: {type: String, required: true},
+  prize: {
+    first: {type: Number, required: true},
+    second: {type: Number, required: true}
+  },
+  place:{
+    day: {type: String, required: true},
+    time: {type: String, required: true},
+    venue: {type: String, required: true}
+  },
+  organisers: {
+    name: {type: String, required: true},
+    contact: {type: String, required: true}
+  }
+})
+
 volunteerSchema.methods.genHash = function(password){
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 }
@@ -43,5 +63,6 @@ volunteerSchema.methods.compareHash = function(password){
 module.exports = {
   volunteerSchema,
   recentActivitySchema,
-  participantSchema
+  participantSchema,
+  eventSchema
 }

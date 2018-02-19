@@ -6,6 +6,7 @@ let schema = require('./schema');
 let Volunteer = mongoose.model('Volunteer', schema.volunteerSchema);
 let RecentActivity = mongoose.model('RecentActivity', schema.recentActivitySchema);
 let Participant = mongoose.model('Participant', schema.participantSchema);
+let Event = mongoose.model('Event', schema.eventSchema);
 
 //Add new Volunteer (Register user)
 let addVolunteer = (data, callback) => {
@@ -100,6 +101,35 @@ let getParticipantsByOwner = (id, callback) => {
 
 let getParticipantDetails = (id, callback) => {
   Participant.findOne({id: id}, (err, success) => {
+    callback(err, success);
+  })
+}
+
+//Add event
+let addEvent = (data, callback) => {
+  let event = new Event(data);
+  event.save((err ,success) => {
+    callback(err, success);
+  })
+}
+
+//get all events
+let getEvents = (callback) => {
+  Event.find({}, (err, success) => {
+    callback(err, success);
+  })
+}
+
+//get event by id
+let getEventById = (id, callback) => {
+  Event.find({_id: id}, (err,success) => {
+    callback(err, success);
+  })
+}
+
+//Modify event
+let modifyEvent = (id, data, callback) => {
+  Event.update({_id: id}, data, (err, success) => {
     callback(err, success);
   })
 }
@@ -237,5 +267,9 @@ module.exports = {
   getSummary,
   getRecentActivity,
   getAllRecentActivity,
-  addRecentActivity
+  addRecentActivity,
+  addEvent,
+  getEvents,
+  getEventById,
+  modifyEvent
 }
