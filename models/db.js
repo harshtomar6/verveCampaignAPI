@@ -163,15 +163,21 @@ let getVolunteerDetail = (id, callback) => {
           let money = 0;
           let i=0;
           console.log(docs.length)
-          docs.forEach(doc => {
-            i++;
-            money += parseInt(doc.price);
-            if(i == docs.length){
-              let data = Object.assign({}, success._doc)
-              data['totalMoney'] = money;
-              return callback(null, data);
-            }
-          })
+          if(docs.length == 0){
+            let data = Object.assign({}, success._doc)
+            data['totalMoney'] = money;
+            return callback(null, data);
+          }
+          else
+            docs.forEach(doc => {
+              i++;
+              money += parseInt(doc.price);
+              if(i == docs.length){
+                let data = Object.assign({}, success._doc)
+                data['totalMoney'] = money;
+                return callback(null, data);
+              }
+            })
         }
       })
   })
