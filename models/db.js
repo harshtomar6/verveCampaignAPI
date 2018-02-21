@@ -61,7 +61,7 @@ let addParticipant = (data, callback) => {
 
       participant.save((err, doc) => {
         if(err)
-          callback(err. null)
+          callback(err, null)
         else{
           Volunteer.update(
             {_id: data.ownerid},
@@ -115,7 +115,7 @@ let addEvent = (data, callback) => {
 
 //get all events
 let getEvents = (callback) => {
-  Event.find({}, (err, success) => {
+  Event.find({}, 'name team ticket type', (err, success) => {
     callback(err, success);
   })
 }

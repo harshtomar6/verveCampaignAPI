@@ -28,7 +28,9 @@ let participantSchema = mongoose.Schema({
   email: {type: String, required: true},
   phone: {type: String, required: true},
   college: {type: String, required: true},
-  event: {type: String, required: true},
+  eventsRegistered: {type: Array, required: true},
+  eventsAttended: {type: Array, required: true},
+  price: {type: Number, required: true},
   ownerid: {type: String, required: true}
 })
 
