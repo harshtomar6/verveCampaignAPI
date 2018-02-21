@@ -122,7 +122,7 @@ let getEvents = (callback) => {
 
 //get event by id
 let getEventById = (id, callback) => {
-  Event.find({_id: id}, (err,success) => {
+  Event.findOne({_id: id}, (err,success) => {
     callback(err, success);
   })
 }
