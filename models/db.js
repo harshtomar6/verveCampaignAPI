@@ -88,7 +88,7 @@ let getId = (len) => {
 }
 
 let getParticipants = (callback) => {
-  Participant.find({}, (err, success) => {
+  Participant.find({}, 'id name eventsRegistered eventsAttended', (err, success) => {
     callback(err, success);
   })
 }

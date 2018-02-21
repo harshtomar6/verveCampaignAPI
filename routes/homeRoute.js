@@ -2,6 +2,7 @@
 let express = require('express');
 let router = express.Router();
 let db = require('./../models/db');
+let nodeMailer = require('nodemailer');
 
 //Allow CORS
 router.use(function(req, res, next) {
@@ -9,6 +10,17 @@ router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+
+let transport = nodeMailer.createTransport({
+  host: "smtp.gmail.com", // hostname
+  secure: false, // use SSL
+  port: 587,
+  auth: {
+    user: 'vtuResults@hurls.in',
+    pass: '#@R$#tomar3'
+  }
+})
 
 router.get('/', (req, res, next) => {
   res.send("Working");
@@ -125,6 +137,22 @@ router.post('/addParticipant', (req, res, next) => {
       res.status(500).send({err: err, data: null});
     else {
       res.status(200).send({err: null, data: success});
+
+      transport.sendMail({
+        from: 'vtuResults@hurls.in',
+        to: req.body.email,
+        subject: 'e-Pass for VERVE 2018',
+        text: 'Hello Man',
+        html: '<b style="color:orange">Test Thing.. No Pass Yet</b>'
+      },function(err, success){
+          if(err){
+            console.log(err)
+            //res.status(500).send('Cannot do any thing');
+          }
+          else
+            console.log('Email Sent')
+            //res.status(200).send("Msg recieved");
+      })
     }
   })
 })
