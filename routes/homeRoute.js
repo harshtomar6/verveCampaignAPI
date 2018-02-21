@@ -209,6 +209,17 @@ router.post('/addEvent', (req, res, next) => {
   })
 })
 
+router.post('/getEventById', (req, res, next) => {
+  console.log(req.body);
+  db.getEventById(req.body.id, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
 router.post('/modifyEvent', (req, res, next) => {
 
   //db.modifyEvent(req.body.id, )
