@@ -209,23 +209,56 @@ let deallotPasses = (id, callback) => {
 
 //Get getSummary
 let getSummary = (callback) => {
-  Volunteer.find({}, (err, success) => {
+  Volunteer.find({}, 'passesSold passesAlloted', (err, success) => {
     let sum1 = 0, sum2=0;
     let index = 0;
 
-    success.forEach(pass => {
-      index++;
-      sum1 += pass.passesAlloted
-      sum2 += pass.passesSold
+    if(success.length == 0)
+      return callback(null, {
+        totalPassesAlloted: 0,
+        totalPassesSold: 0,
+        totalVolunteersRegistered: success.length
+      })
+    else
+      success.forEach(pass => {
+        index++;
+        sum1 += pass.passesAlloted
+        sum2 += pass.passesSold
 
 
-      if(index == success.length)
-        callback(err, {
-          totalPassesAlloted: sum1,
-          totalPassesSold: sum2,
-          totalVolunteersRegistered: success.length
-        });
-    })
+        if(index == success.length){
+          Participant.find({}, 'price', (err, success2) => {
+            if(err)
+              callback(err, null);
+            else{
+              let totalCollection = 0, j=0;
+              if(success2.length == 0){
+                return callback(null, {
+                  totalPassesAlloted: sum1,
+                  totalPassesSold: sum2,
+                  totalVolunteersRegistered: success.length,
+                  totalCollection: totalCollection,
+                  totalParticipants: success2.length
+                })
+              }else{
+                success2.forEach(item => {
+                  j++;
+                  totalCollection += item.price
+                  if(j == success2.length){
+                    return callback(null, {
+                      totalPassesAlloted: sum1,
+                      totalPassesSold: sum2,
+                      totalVolunteersRegistered: success.length,
+                      totalCollection: totalCollection,
+                      totalParticipants: success2.length
+                    })
+                  }
+                })
+              }
+            }
+          })
+        }
+      })
   })
 }
 
