@@ -51,7 +51,9 @@ let eventSchema = mongoose.Schema({
   organisers: {
     name: {type: String, required: true},
     contact: {type: String, required: true}
-  }
+  },
+  participantsRegistered: {type: Number, required: true, default: 0},
+  participantsAttended: {type: Number, required: true, default: 0}
 })
 
 volunteerSchema.methods.genHash = function(password){

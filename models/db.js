@@ -67,7 +67,15 @@ let addParticipant = (data, callback) => {
             {_id: data.ownerid},
             {$inc: {passesSold: 1}},
             (err, doc2) => {
-              callback(err, doc);
+              let i=0
+              data.eventsRegistered.forEach((event) => {
+                Event.update({name: event}, {$inc: {participantsRegistered: 1}}, (err, doc3) => {
+                  i++;
+
+                  if(i === data.eventsRegistered.length)
+                    callback(err, doc);
+                })
+              })
             }
           )
         }
@@ -145,7 +153,27 @@ let getVolunteers = (callback) => {
 //Get Volunteer Detail
 let getVolunteerDetail = (id, callback) => {
   Volunteer.findOne({_id: id}, (err, success) => {
-    callback(err, success);
+    if(err)
+      callback(err, null);
+    else
+      Participant.find({ownerid: id},'price', (err, docs) => {
+        if(err)
+          callback(err, null);
+        else{
+          let money = 0;
+          let i=0;
+          console.log(docs.length)
+          docs.forEach(doc => {
+            i++;
+            money += parseInt(doc.price);
+            if(i == docs.length){
+              let data = Object.assign({}, success._doc)
+              data['totalMoney'] = money;
+              return callback(null, data);
+            }
+          })
+        }
+      })
   })
 }
 
