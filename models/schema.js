@@ -8,7 +8,6 @@ let volunteerSchema = mongoose.Schema({
   password : {type: String, required: true},
   userid : {type: String, required: true},
   phone: {type: String, required: true},
-  passesAlloted : {type: Number, default: 0},
   passesSold : {type: Number, default: 0}
 });
 
