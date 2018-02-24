@@ -3,6 +3,7 @@ let express = require('express');
 let router = express.Router();
 let db = require('./../models/db');
 let nodeMailer = require('nodemailer');
+let fs = require('fs');
 
 //Allow CORS
 router.use(function(req, res, next) {
@@ -11,6 +12,8 @@ router.use(function(req, res, next) {
   next();
 });
 
+//
+router.use(express.static('src'))
 
 let transport = nodeMailer.createTransport({
   host: "smtp.gmail.com", // hostname
@@ -24,6 +27,25 @@ let transport = nodeMailer.createTransport({
 
 router.get('/', (req, res, next) => {
   res.send("Working");
+  fs.readFile('public/verveemail.html', (err, buffer) => {
+    html = buffer.toString();
+
+    transport.sendMail({
+      from: 'vtuResults@hurls.in',
+      to: 'harshtomar6@gmail.com',
+      subject: 'e-Pass for VERVE 2018',
+      text: 'Hello Man',
+      html: html
+    },function(err, success){
+        if(err){
+          console.log(err)
+          //res.status(500).send('Cannot do any thing');
+        }
+        else
+          console.log('Email Sent')
+          //res.status(200).send("Msg recieved");
+    })
+  })
 });
 
 router.get('/getHomeData', (req, res, next) => {
@@ -138,21 +160,6 @@ router.post('/addParticipant', (req, res, next) => {
     else {
       res.status(200).send({err: null, data: success});
 
-      transport.sendMail({
-        from: 'vtuResults@hurls.in',
-        to: req.body.email,
-        subject: 'e-Pass for VERVE 2018',
-        text: 'Hello Man',
-        html: '<b style="color:orange">Test Thing.. No Pass Yet</b>'
-      },function(err, success){
-          if(err){
-            console.log(err)
-            //res.status(500).send('Cannot do any thing');
-          }
-          else
-            console.log('Email Sent')
-            //res.status(200).send("Msg recieved");
-      })
     }
   })
 })

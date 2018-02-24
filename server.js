@@ -25,6 +25,9 @@ app.use(logger('dev'));
 //Set App routes
 app.use('/', homeRoute)
 
+//Set static directory
+app.use(express.static(__dirname+'/public'))
+
 //Use WebSockets
 let server = http.Server(app);
 let io = socketio(server);
@@ -44,7 +47,7 @@ io.on('connection', (socket) => {
       }
     })
   })
-  
+
   socket.on('allot-passes', data => {
     io.emit('alloted', {id: data.id, passesAlloted: data.passes})
   })
