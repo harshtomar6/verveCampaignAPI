@@ -27,7 +27,7 @@ let transport = nodeMailer.createTransport({
 
 router.get('/', (req, res, next) => {
   res.send("Working");
-  fs.readFile('public/verveemail-inline.html', (err, buffer) => {
+  fs.readFile('public/mail.html', (err, buffer) => {
     html = buffer.toString();
 
     transport.sendMail({
