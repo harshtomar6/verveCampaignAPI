@@ -113,6 +113,29 @@ let getParticipantDetails = (id, callback) => {
   })
 }
 
+let validateParticipant = (id, eventName, callback) => {
+  Participant.findOne({_id: id}, (err, doc) => {
+    let index = doc.eventsRegistered.indexOf(eventName);
+    doc.eventsRegistered.splice(index, 1);
+
+    if(doc.eventsAttended.includes('none')){
+      doc.eventsAttended = [];
+      doc.eventsAttended.push(eventName);
+    }else
+      doc.eventsAttended.push(eventName);
+
+    doc.save((err, success) => {
+      if(err)
+        return callback(err, null);
+      else{
+        Event.update({name: eventName}, {$inc: {participantsAttended: 1}}, (err, success2) => {
+          callback(err, success2)
+        })
+      }
+    })
+  })
+}
+
 //Add event
 let addEvent = (data, callback) => {
   let event = new Event(data);
@@ -323,6 +346,7 @@ module.exports = {
   getParticipants,
   getParticipantsByOwner,
   getParticipantDetails,
+  validateParticipant,
   getVolunteers,
   getVolunteerDetail,
   readPassesStatus,

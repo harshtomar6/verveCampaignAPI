@@ -195,6 +195,17 @@ router.post('/getParticipantDetails', (req, res, next) => {
   })
 })
 
+router.post('/validateParticipant', (req, res, next) => {
+  console.log(req.body);
+  db.validateParticipant(req.body.id, req.body.name, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
 router.get('/getEvents', (req, res, next) => {
   db.getEvents((err, success) => {
     if(err)

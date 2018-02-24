@@ -1,74 +1,94 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>body {
-font-family: sans-serif;
+
+	<style>body {
+margin: 0px; padding: 0px; font-family: sans-serif;
 }
-@media(min-width:768px){
-	.logo img{
-
-		width: 250px;
-		height: 160px;
-		z-index: 10;
-	}
-	#pass{
-		color: #fff;
-		font-size: 4em;
-		font-weight: 900;
-		margin-top: 30px;
-	}
-	.row2{
-		position: relative;
-		padding: 20px 60px;
-		z-index: 10;
-		margin-top: 40px;
-		margin-bottom: 60px;
-	}
+.row:after {
+content: ""; display: table; clear: both;
+}
+@media (max-width: 600px) {
+  .column {
+    width: 99%;
+  }
+  h3 {
+    text-align: center;
+  }
+  .logo img {
+    margin-left: 20%;
+  }
+  .title {
+    font-size: 1em;
+  }
+  .logo img {
+    width: 220px; height: 120px;
+  }
+  #pass {
+    font-size: 3em;
+  }
 }
 </style>
 </head>
-<body style="font-family: sans-serif;">
-	<div class="container" style='width: 90%; box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5); background: url("https://verve2k18.herokuapp.com/login-back.jpg") no-repeat 0% 0% / cover; margin: 10px auto;'>
-		<div class="row" style="display: flex; justify-content: space-between; border-bottom-width: 5px; border-bottom-color: white; border-bottom-style: solid; z-index: 100; margin: 0 30px;">
-			<div class="logo" style="top: 0; left: 60; z-index: 10;">
-				<img src="https://verve2k18.herokuapp.com/logo.png" style="width: 100px; height: 80px; z-index: 10;">
-			</div>
-			<div class="e-pass" style="z-index: 10; padding: 5px 20px;">
-				<h3 id="pass" style="color: #fff; font-size: 2em; font-weight: 900; margin-top: 30px;">e-Pass</h3>
-			</div>
-		</div>
+<body style="font-family: sans-serif; margin: 0px; padding: 0px;">
 
-		<div class="row2" style="position: relative; z-index: 10; margin-top: 40px; margin-bottom: 60px; padding: 20px 60px;">
-			<div class="inner-row" style="display: flex; flex-wrap: wrap; z-index: 10;">
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> Participant Id : </span>
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> 18VERVE0001  </span>
-			</div>
-			<div class="inner-row" style="display: flex; flex-wrap: wrap; z-index: 10;">
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> Name : </span>
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> Harsh Tomar  </span>
-			</div>
-			<div class="inner-row" style="display: flex; flex-wrap: wrap; z-index: 10;">
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> College : </span>
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> JSSATE  </span>
-			</div>
-			<div class="inner-row" style="display: flex; flex-wrap: wrap; z-index: 10;">
-				<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px;"> Events : </span>
-				<div class="inner-row" style="display: flex; flex-wrap: wrap; z-index: 10;">
-					<div class="event-wrap" style="border-radius: 20px; background-color: #fc4442; color: #fff; margin: 5; padding: 10;">
-						<span class="event"> NFS </span>
-					</div>
-					<div class="event-wrap" style="border-radius: 20px; background-color: #fc4442; color: #fff; margin: 5; padding: 10;">
-						<span class="event"> Coding n Debugging</span>
-					</div>
+		<div class="container" style='width: 90%; box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5); background: url("https://verve2k18.herokuapp.com/login-back.jpg") no-repeat 0% 0% / cover; margin: 10px auto;'>
+			<div class="row" style="border-bottom-width: 5px; border-bottom-color: white; border-bottom-style: solid; width: 92%; margin: 0px auto;">
+				<div class="logo column" style="top: 0; left: 60; float: left; width: 45%; padding: 10px;">
+					<img src="https://verve2k18.herokuapp.com/logo.png" style="width: 250px; height: 160px;">
+				</div>
+				<div class="e-pass column" style="float: left; width: 45%; padding: 10px;">
+					<h3 id="pass" style="color: #fff; font-size: 4em; font-weight: 900; margin: 20px 0px;" align="right">e-Pass</h3>
 				</div>
 			</div>
+			<table class="first" style="margin-top: 100px; margin-left: 4%;">
+				<tr style="padding: 100px 0px;">
+					<td class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);">Participant Id </td>
+					<td class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);">: 18VERVE0001 </td>
+
+				</tr>
+				<tr style="padding: 100px 0px;">
+					<td class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);"> Name </td>
+					<td class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);">: Harsh Tomar  </td>
+
+				</tr>
+				<tr style="padding: 100px 0px;">
+					<td class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);"> College </td>
+					<td class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);">: JSSATE  </td>
+				</tr>
+
+			</table>
+
+			<div class="b">
+			<table class="second" style="margin-left: 4%; padding-bottom: 50px;">
+				<tr style="padding: 100px 0px;">
+					<td>
+						<span class="title" style="color: #fff; text-transform: uppercase; font-size: 1.5em; letter-spacing: 2; text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);"> Events </span>
+						<div class="inner-row">
+					</div>
+</td>
+					<td>
+						<table>
+								<tr style="padding: 100px 0px;">
+									<td>
+										<div class="event-wrap" style="border-radius: 20px; background-color: #fc4442; color: #fff; margin: 5; padding: 10;">
+											<span class="event"> NFS </span>
+										</div>
+									</td>
+									<td>
+										<div class="event-wrap" style="border-radius: 20px; background-color: #fc4442; color: #fff; margin: 5; padding: 10;">
+											<span class="event"> Coding n Debugging</span>
+										</div>
+									</td>
+								</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
 		</div>
-
-	</div>
-
-
+		</div>
 
 
 </body>
