@@ -151,6 +151,12 @@ let getEvents = (callback) => {
   })
 }
 
+let getAllEvents = (callback) => {
+  Event.find({}, 'name team ticket type organisers place prize', (err, success) => {
+    callback(err, success);
+  })
+}
+
 //get event by id
 let getEventById = (id, callback) => {
   Event.findOne({_id: id}, (err,success) => {
@@ -359,5 +365,6 @@ module.exports = {
   addEvent,
   getEvents,
   getEventById,
+  getAllEvents,
   modifyEvent
 }

@@ -217,6 +217,16 @@ router.get('/getEvents', (req, res, next) => {
   })
 })
 
+router.get('/getAllEvents', (req, res, next) => {
+  db.getAllEvents((err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
 router.post('/addEvent', (req, res, next) => {
   console.log(req.body);
   db.addEvent(req.body, (err, success) => {
