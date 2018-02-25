@@ -114,9 +114,9 @@ let getParticipantDetails = (id, callback) => {
 }
 
 let validateParticipant = (id, eventName, callback) => {
-  Participant.findOne({_id: id}, (err, doc) => {
+  Participant.findOne({id: id}, (err, doc) => {
     let index = doc.eventsRegistered.indexOf(eventName);
-    doc.eventsRegistered.splice(index, 1);
+    //doc.eventsRegistered.splice(index, 1);
 
     if(doc.eventsAttended.includes('none')){
       doc.eventsAttended = [];
