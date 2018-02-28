@@ -249,6 +249,16 @@ router.post('/getEventById', (req, res, next) => {
   })
 })
 
+router.get('/getEventByType/:type', (req, res, next) => {
+  console.log(req.params);
+  db.getEventByType(req.params.type, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else
+      res.status(200).send({err: null, data: success});
+  })
+})
+
 router.post('/modifyEvent', (req, res, next) => {
 
   //db.modifyEvent(req.body.id, )

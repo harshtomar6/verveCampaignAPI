@@ -164,6 +164,13 @@ let getEventById = (id, callback) => {
   })
 }
 
+//Get events by Type
+let getEventByType = (type, callback) => {
+  Event.find({type: type}, (err, success) => {
+    callback(err, success);
+  })
+}
+
 //Modify event
 let modifyEvent = (id, data, callback) => {
   Event.update({_id: id}, data, (err, success) => {
@@ -365,6 +372,7 @@ module.exports = {
   addEvent,
   getEvents,
   getEventById,
+  getEventByType,
   getAllEvents,
   modifyEvent
 }
