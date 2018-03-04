@@ -152,7 +152,7 @@ let getEvents = (callback) => {
 }
 
 let getAllEvents = (callback) => {
-  Event.find({}, 'name team ticket type organisers place prize', (err, success) => {
+  Event.find({}, (err, success) => {
     callback(err, success);
   })
 }
