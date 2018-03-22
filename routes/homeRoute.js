@@ -17,17 +17,15 @@ router.use(function(req, res, next) {
 router.use(express.static('src'))
 
 let transport = nodeMailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "jssverve.org",
   port: 465,
   secure: true,
+  tls: {
+    rejectUnauthorized:false
+  },
   auth: {
-    type: 'OAuth2',
-    user: "harsh@techpay.in",
-    clientId: "584681151358-o564nrerbqh6nfpm9h3g95h62uq02njc.apps.googleusercontent.com",
-    clientSecret: "YzOlCVV-I5XPElLoJFEsTWUp",
-    refreshToken: "1/EWBb5_VXkN7rWsc6vwddb6nXshZzYr1b8R5vkiADbJ0",
-    accessToken: "ya29.Glt-BUb6LDv3pRROs6KXnDvgYvsZe_Lr-jWZ3A5TqpgBur_iDq4G9d9eG7PV_DiS7TOjg08CmaLYNOIyA1fC0VEeCF8QBuTz_Xx-3fVSd6SGgU0AB7tmi7CNjzZX",
-    expires: 1484314697598
+    user: 'ticketmaster@jssverve.org',
+    pass: '^lT1$vt=Pwki'
   }
 })
 
@@ -157,7 +155,7 @@ router.post('/addParticipant', (req, res, next) => {
           console.log(err)
         else
           transport.sendMail({
-            from: 'TechPay <sales@techpay.in>',
+            from: 'ticketmaster@jssverve.org',
             to: success.email,
             subject: 'e-Pass for VERVE 2018',
             text: 'Hello Man',
