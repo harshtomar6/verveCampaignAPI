@@ -158,7 +158,7 @@ router.post('/addParticipant', (req, res, next) => {
         else
           transport.sendMail({
             from: 'TechPay <sales@techpay.in>',
-            to: 'harshtomar6@gmail.com',
+            to: success.email,
             subject: 'e-Pass for VERVE 2018',
             text: 'Hello Man',
             html: html
