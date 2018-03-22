@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-witdh, initial-scale=1">
+	<title>E-PASS for Verve 2018</title>
+</head>
+<body style="margin:0;padding:0;font-family: sans-serif;">
+	<div>
+		<div style="background-color: #777; padding: 30px 30px; text-align: center">
+			<h3 style="color: #fff">EVENT <span style="color: orange">PASS</span></h3>
+		</div>
+		<div style="background: linear-gradient(#e7e9bb, #403b4a);padding: 50px; position: relative; overflow: hidden;min-height: 400px">
+			
+			<h3 style="color: #fff;text-align: center">VERVE <span style="color: orange">2018</span></h3>
+
+			<div style="width: 160px; margin: 5px auto;">
+				<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<%= participantId %>" alt="qr-code"/>
+			</div>
+
+			<div style="width:250px; margin: 30px auto;">
+				<table style="color: #fff">
+					<tr>
+						<td>Participant ID : </td>
+						<td><%= participantId %> </td>
+					</tr>
+					<tr>
+						<td>Name : </td>
+						<td><%= name %></td>
+					</tr>
+					<tr>
+						<td>College : </td>
+						<td><%= college %></td>
+					</tr>
+					<tr>
+							<td>Phone : </td>
+							<td><%= phone %></td>
+						</tr>
+					<tr>
+						<td>Events : </td>
+						<td>
+							<table>
+								<tbody>
+								<div style="display: inline">
+									<% 
+										for(var i=0;i<events.length;i++){ %>
+											<div style="display: inline-block;">
+												<div style="padding:10px;border-radius: 20px;background:#fc4442;margin:5px;color:#fff;display: inline-block;">
+													<span><%= events[i]%></span>
+												</div>
+											</div>
+										<% } %>
+								</div>
+							</tbody>
+							</table>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
