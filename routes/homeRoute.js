@@ -293,6 +293,9 @@ router.post('/modifyEvent', (req, res, next) => {
 //Render e-pass
 router.get('/epass/:id', (req, res, next) => {
   let id = req.params.id;
+  var pat = new RegExp('18VERVE[0-9]{4}$')
+
+  if(pat.test(id)){
   db.getParticipantDetails(id, (err, success) => {
     if(err)
       res.send('Oops.. Some weird thing happened. ! We cannot display your pass');
@@ -309,7 +312,11 @@ router.get('/epass/:id', (req, res, next) => {
         else
           res.send(html);
       })
-  }) 
+  })
+  }
+  else
+    res.send('Invalid Participant Id');
+
 })
 
 module.exports = router;
