@@ -177,7 +177,7 @@ router.post('/addParticipant', (req, res, next) => {
       request.post('https://api.textlocal.in/send/', {form:{
         apiKey: "9mB7hzcNOZQ-LXFiicQcR6bGLLYATJm804efGeYvjW",
         numbers: success.phone,
-        message: `Thanks for participating in Verve 2018. Your Participant ID is ${success.id}. You have registered for ${events}.`
+        message: `Thanks for participating in Verve 2018. Your Participant ID is ${success.id}. You have registered for ${events}. To view your e-pass visit http://verve2k18.herokuapp.com/${success.id}`
       }}, (err, res, body) => {
         if(err || res.statusCode !== 200)
           console.log('Cannot send Text');
@@ -288,6 +288,28 @@ router.get('/getEventByType/:type', (req, res, next) => {
 router.post('/modifyEvent', (req, res, next) => {
 
   //db.modifyEvent(req.body.id, )
+})
+
+//Render e-pass
+router.get('/epass/:id', (req, res, next) => {
+  let id = req.params.id;
+  db.getParticipantDetails(id, (err, success) => {
+    if(err)
+      res.send('Oops.. Some weird thing happened. ! We cannot display your pass');
+    else
+      ejs.renderFile('public/epass.ejs', {
+        participantId: success.id,
+        name: success.name,
+        college: success.college,
+        phone: success.phone,
+        events: success.eventsRegistered
+      }, function(err, html){
+        if(err)
+          console.log(err)
+        else
+          res.send(html);
+      })
+  }) 
 })
 
 module.exports = router;
