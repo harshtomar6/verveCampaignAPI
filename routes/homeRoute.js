@@ -299,19 +299,24 @@ router.get('/epass/:id', (req, res, next) => {
   db.getParticipantDetails(id, (err, success) => {
     if(err)
       res.send('Oops.. Some weird thing happened. ! We cannot display your pass');
-    else
-      ejs.renderFile('public/epass.ejs', {
-        participantId: success.id,
-        name: success.name,
-        college: success.college,
-        phone: success.phone,
-        events: success.eventsRegistered
-      }, function(err, html){
-        if(err)
-          console.log(err)
-        else
-          res.send(html);
-      })
+    else{
+      if(success){
+        ejs.renderFile('public/epass.ejs', {
+          participantId: success.id,
+          name: success.name,
+          college: success.college,
+          phone: success.phone,
+          events: success.eventsRegistered
+        }, function(err, html){
+          if(err)
+            console.log(err)
+          else
+            res.send(html);
+        })
+      }else{
+        res.status(500).send('Participant not Found');
+      }
+    }
   })
   }
   else
