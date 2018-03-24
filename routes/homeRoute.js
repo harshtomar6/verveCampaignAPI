@@ -3,7 +3,7 @@ let express = require('express');
 let router = express.Router();
 let db = require('./../models/db');
 let nodeMailer = require('nodemailer');
-let fs = require('fs');
+let request = require('request');
 let ejs = require('ejs');
 
 //Allow CORS
@@ -31,6 +31,7 @@ let transport = nodeMailer.createTransport({
 
 router.get('/', (req, res, next) => {
   res.send("Working");
+
 });
 
 router.get('/getHomeData', (req, res, next) => {
@@ -144,6 +145,7 @@ router.post('/addParticipant', (req, res, next) => {
       res.status(500).send({err: err, data: null});
     else {
       res.status(200).send({err: null, data: success});
+      // Send E-mail
       ejs.renderFile('public/epass.ejs', {
         participantId: success.id,
         name: success.name,
@@ -170,6 +172,20 @@ router.post('/addParticipant', (req, res, next) => {
                 //res.status(200).send("Msg recieved");
           })
       })
+      //Send Text
+      let events = success.eventsRegistered.join(', ')
+      request.post('https://api.textlocal.in/send/', {form:{
+        apiKey: "9mB7hzcNOZQ-LXFiicQcR6bGLLYATJm804efGeYvjW",
+        numbers: success.phone,
+        message: `Thanks for participating in Verve 2018. Your Participant ID is ${success.id}. You have registered for ${events}.`
+      }}, (err, res, body) => {
+        if(err || res.statusCode !== 200)
+          console.log('Cannot send Text');
+        else{
+          console.log('Text Send');
+          console.log(body);
+        }
+      });
     }
   })
 })
