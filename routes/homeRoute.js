@@ -177,7 +177,7 @@ router.post('/addParticipant', (req, res, next) => {
       request.post('https://api.textlocal.in/send/', {form:{
         apiKey: "9mB7hzcNOZQ-LXFiicQcR6bGLLYATJm804efGeYvjW",
         numbers: success.phone,
-        message: `Thanks for participating in Verve 2018. Your Participant ID is ${success.id}. You have registered for ${events}. To view your e-pass visit http://verve2k18.herokuapp.com/${success.id}`
+        message: `Thanks for participating in Verve 2018. Your Participant ID is ${success.id}. You have registered for ${events}. To view your e-pass visit http://verve2k18.herokuapp.com/epass/${success.id}`
       }}, (err, res, body) => {
         if(err || res.statusCode !== 200)
           console.log('Cannot send Text');
