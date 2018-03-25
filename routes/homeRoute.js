@@ -29,6 +29,19 @@ let transport = nodeMailer.createTransport({
   }
 })
 
+let transport2 = nodeMailer.createTransport({
+  host: "jssverve.org",
+  port: 465,
+  secure: true,
+  tls: {
+    rejectUnauthorized:false
+  },
+  auth: {
+    user: 'contact@jssverve.org',
+    pass: 'p,s1nG$dl;~['
+  }
+})
+
 router.get('/', (req, res, next) => {
   res.send("Working");
 
@@ -322,6 +335,29 @@ router.get('/epass/:id', (req, res, next) => {
   else
     res.send('Invalid Participant Id');
 
+})
+
+router.post('/contact', (req, res, next) => {
+  let name = req.body.name;
+  let email = req.body.email;
+  let comment = req.body.comment;
+
+  transport2.sendMail({
+    from: 'contact@jssverve.org',
+    to: 'contact@jssverve.org',
+    subject: 'Feedback',
+    text: `Hi, \n ${name} send a Feedback. \n Name - ${name} \n email - ${email} \n comments - ${comment} `,
+  },function(err, success){
+      if(err){
+        console.log(err)
+        res.status(500).send('Error in sending email');
+      }
+      else{
+        console.log('Email Sent')
+        res.status(200).send("Email Sent");
+      }
+  })
+  
 })
 
 module.exports = router;
