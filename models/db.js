@@ -85,11 +85,11 @@ let addParticipant = (data, callback) => {
 }
 
 let getId = (len) => {
-  if(len < 10)
+  if(len < 9)
     return '000'+(++len);
-  else if(len >= 10 && len < 100)
+  else if(len >= 9 && len < 99)
     return '00'+ (++len);
-  else if(len >= 100 && len < 1000)
+  else if(len >= 99 && len < 999)
     return '0'+ (++len);
   else
     return ++len;
