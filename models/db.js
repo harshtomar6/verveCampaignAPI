@@ -11,15 +11,16 @@ let Event = mongoose.model('Event', schema.eventSchema);
 //Add new Volunteer (Register user)
 let addVolunteer = (data, callback) => {
 
-  Volunteer.findOne({email: data.email}, (err, user) => {
+  Volunteer.findOne({userid: data.userid.toUpperCase()}, (err, user) => {
     if(err)
       return callback(err, null);
     else{
       if(user)
-        return callback('User Already Registered! Please Login', null);
+        return callback('USN Already Registered! Please Login', null);
       else{
 
         let volunteer = new Volunteer(data);
+        volunteer.userid = data.userid.toUpperCase();
         volunteer.password = volunteer.genHash(data.password);
 
         volunteer.save((err, doc) => {
@@ -32,7 +33,7 @@ let addVolunteer = (data, callback) => {
 
 //Login volunteer
 let loginVolunteer = (data, callback) => {
-  Volunteer.findOne({userid: data.userid}, (err, user) => {
+  Volunteer.findOne({userid: data.userid.toUpperCase()}, (err, user) => {
      if(err)
        return callback(err, null);
      else{
