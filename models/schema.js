@@ -8,7 +8,8 @@ let volunteerSchema = mongoose.Schema({
   password : {type: String, required: true},
   userid : {type: String, required: true},
   phone: {type: String, required: true},
-  passesSold : {type: Number, default: 0}
+  passesSold : {type: Number, default: 0, required: true},
+  amountCollected: {type: Number, default: 0, required: true}
 });
 
 let recentActivitySchema = mongoose.Schema({
