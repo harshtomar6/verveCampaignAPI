@@ -213,6 +213,16 @@ router.get('/getParticipants', (req, res, next) => {
   })
 })
 
+router.post('/getParticipantsByEvent', (req, res, next) => {
+  db.getParticipantsByEvent(req.body.event, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null});
+    else {
+      res.status(200).send({err: null, data: success});
+    }
+  })
+})
+
 router.post('/getVolunteerParticipants', (req, res, next) => {
   db.getParticipantsByOwner(req.body.id, (err, success) => {
     if(err)
