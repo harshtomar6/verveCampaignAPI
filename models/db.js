@@ -263,21 +263,22 @@ let deallotPasses = (id, callback) => {
 
 //Get getSummary
 let getSummary = (callback) => {
-  Volunteer.find({}, 'passesSold', (err, success) => {
-    let sum1 = 0, sum2=0;
+  Volunteer.find({}, 'passesSold amountCollected', (err, success) => {
+    let sum1 = 0, sum2=0, amountCollected=0;
     let index = 0;
 
     if(success.length == 0)
       return callback(null, {
         totalPassesAlloted: 0,
         totalPassesSold: 0,
-        totalVolunteersRegistered: success.length
+        totalVolunteersRegistered: success.length,
+        totalAmountCollected: 0
       })
     else
       success.forEach(pass => {
         index++;
         sum2 += pass.passesSold
-
+        amountCollected += pass.amountCollected
 
         if(index == success.length){
           Participant.find({}, 'price', (err, success2) => {
@@ -290,7 +291,8 @@ let getSummary = (callback) => {
                   totalPassesSold: sum2,
                   totalVolunteersRegistered: success.length,
                   totalCollection: totalCollection,
-                  totalParticipants: success2.length
+                  totalParticipants: success2.length,
+                  amountCollected: amountCollected
                 })
               }else{
                 success2.forEach(item => {
@@ -301,7 +303,8 @@ let getSummary = (callback) => {
                       totalPassesSold: sum2,
                       totalVolunteersRegistered: success.length,
                       totalCollection: totalCollection,
-                      totalParticipants: success2.length
+                      totalParticipants: success2.length,
+                      amountCollected: amountCollected
                     })
                   }
                 })
