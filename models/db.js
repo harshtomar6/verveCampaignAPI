@@ -108,6 +108,12 @@ let getParticipantsByOwner = (id, callback) => {
   })
 }
 
+let getParticipantsByEvent = (name, callback) => {
+  Participant.find({eventsRegistered: {$elemMatch: {$eq: name}}}, (err, success)=> {
+    callback(err, success);
+  })
+}
+
 let getParticipantDetails = (id, callback) => {
   Participant.findOne({id: id}, (err, success) => {
     callback(err, success);
@@ -378,5 +384,6 @@ module.exports = {
   getEventById,
   getEventByType,
   getAllEvents,
-  modifyEvent
+  modifyEvent,
+  getParticipantsByEvent
 }
