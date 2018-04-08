@@ -229,6 +229,14 @@ let getVolunteerDetail = (id, callback) => {
   })
 }
 
+// Collect Money from volunteer
+let collectMoney = (id, amount, callback) => {
+  
+  Volunteer.update({_id: id}, {$inc: {amountCollected: amount}}, (err, success) => {
+    callback(err, success);
+  })
+}
+
 //Read Passes Status
 let readPassesStatus = (id, callback) => {
   Volunteer.findOne({_id: id}, (err, success) => {
@@ -385,5 +393,6 @@ module.exports = {
   getEventByType,
   getAllEvents,
   modifyEvent,
-  getParticipantsByEvent
+  getParticipantsByEvent,
+  collectMoney
 }

@@ -83,6 +83,16 @@ router.post('/getVolunteerDetail', (req, res, next) => {
   })
 })
 
+router.post('/collectMoney', (req, res, next) => {
+  console.log(req.body);
+  db.collectMoney(req.body.id, req.body.amount, (err, success) => {
+    if(err)
+      res.status(500).send({err: err, data: null})
+    else
+      res.status(200).send({err: null, data: success})
+  })
+})
+
 router.post('/allotPasses', (req, res, next) => {
   console.log(req.body);
   db.allotPasses(req.body, (err, success) => {
