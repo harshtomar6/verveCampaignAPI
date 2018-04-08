@@ -364,6 +364,12 @@ let getDescription = (data) => {
     case 'LOGOUT':
       description = `${data.owner.name} logged out !`
       break;
+    case 'VALIDATE':
+      description = `${data.owner.name} validated ${data.owner.participant}`;
+      break;
+    case 'MONEY_COLLECT':
+      description = `Admin collected Rs. ${data.owner.amount} from ${data.owner.name}`
+      break;
     default:
       description = 'Unidentified Activity';
   }
