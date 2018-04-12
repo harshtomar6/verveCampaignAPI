@@ -5,6 +5,7 @@ let db = require('./../models/db');
 let nodeMailer = require('nodemailer');
 let request = require('request');
 let ejs = require('ejs');
+let path = require('path');
 
 //Allow CORS
 router.use(function(req, res, next) {
@@ -43,8 +44,13 @@ let transport2 = nodeMailer.createTransport({
 })
 
 router.get('/', (req, res, next) => {
-  res.send("Working");
-
+  res.render(path.resolve('./public/concert-pass.ejs'), {
+    participantId: '18VERVE0001',
+    name: 'Chutiya',
+    college: 'Bhak bhosdk',
+    phone: '9874323456',
+    events: ['ARMAN MALIK LIVE CONCERT']
+  });
 });
 
 router.get('/getHomeData', (req, res, next) => {
@@ -169,32 +175,63 @@ router.post('/addParticipant', (req, res, next) => {
     else {
       res.status(200).send({err: null, data: success});
       // Send E-mail
-      ejs.renderFile('public/epass.ejs', {
-        participantId: success.id,
-        name: success.name,
-        college: success.college,
-        phone: success.phone,
-        events: success.eventsRegistered
-      }, function(err, html){
-        if(err)
-          console.log(err)
-        else
-          transport.sendMail({
-            from: 'ticketmaster@jssverve.org',
-            to: success.email,
-            subject: 'e-Pass for VERVE 2018',
-            text: 'Hello Man',
-            html: html
-          },function(err, success){
-              if(err){
-                console.log(err)
-                //res.status(500).send('Cannot do any thing');
-              }
-              else
-                console.log('Email Sent')
-                //res.status(200).send("Msg recieved");
-          })
-      })
+      if(success.eventsRegistered.length === 1 && success.eventsRegistered[0] === 'ARMAN MALIK LIVE CONCERT'){
+        ejs.renderFile('public/concert-pass.ejs', {
+          participantId: success.id,
+          name: success.name,
+          college: success.college,
+          phone: success.phone,
+          events: success.eventsRegistered
+        }, function(err, html){
+          if(err)
+            console.log(err)
+          else
+            transport.sendMail({
+              from: 'ticketmaster@jssverve.org',
+              to: success.email,
+              subject: 'e-Pass for ARMAN MALIK LIVE CONCERT 2018',
+              text: `OOPS. Cannot render html.. Visit https://jssverve.org/epass.php/${success.id}`,
+              html: html
+            },function(err, success){
+                if(err){
+                  console.log(err)
+                  //res.status(500).send('Cannot do any thing');
+                }
+                else
+                  console.log('Email Sent')
+                  //res.status(200).send("Msg recieved");
+            })
+        }) 
+      }
+      else{
+        ejs.renderFile('public/epass.ejs', {
+          participantId: success.id,
+          name: success.name,
+          college: success.college,
+          phone: success.phone,
+          events: success.eventsRegistered
+        }, function(err, html){
+          if(err)
+            console.log(err)
+          else
+            transport.sendMail({
+              from: 'ticketmaster@jssverve.org',
+              to: success.email,
+              subject: 'e-Pass for VERVE 2018',
+              text: `OOPS. Cannot render html.. Visit https://jssverve.org/epass.php/${success.id}`,
+              html: html
+            },function(err, success){
+                if(err){
+                  console.log(err)
+                  //res.status(500).send('Cannot do any thing');
+                }
+                else
+                  console.log('Email Sent')
+                  //res.status(200).send("Msg recieved");
+            })
+        })
+      }
+    
       //Send Text
       let events = success.eventsRegistered.join(', ')
       request.post('https://api.textlocal.in/send/', {form:{

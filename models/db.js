@@ -7,6 +7,7 @@ let Volunteer = mongoose.model('Volunteer', schema.volunteerSchema);
 let RecentActivity = mongoose.model('RecentActivity', schema.recentActivitySchema);
 let Participant = mongoose.model('Participant', schema.participantSchema);
 let Event = mongoose.model('Event', schema.eventSchema);
+let ConcertPaticipant = mongoose.model('ConcertParticipant', schema.concertParticipantSchema);
 
 //Add new Volunteer (Register user)
 let addVolunteer = (data, callback) => {
@@ -153,13 +154,13 @@ let addEvent = (data, callback) => {
 
 //get all events
 let getEvents = (callback) => {
-  Event.find({}, 'name team ticket type', (err, success) => {
+  Event.find({name: {$ne: 'ARMAN MALIK LIVE CONCERT'}}, 'name team ticket type', (err, success) => {
     callback(err, success);
   })
 }
 
 let getAllEvents = (callback) => {
-  Event.find({}, (err, success) => {
+  Event.find({name: {$ne: 'ARMAN MALIK LIVE CONCERT'}}, (err, success) => {
     callback(err, success);
   })
 }
@@ -365,7 +366,7 @@ let getDescription = (data) => {
       description = `${data.owner.name} logged out !`
       break;
     case 'VALIDATE':
-      description = `${data.owner.name} validated ${data.owner.participant}`;
+      description = `${data.owner.name} validated ${data.owner.participant} for ${data.owner.event}`;
       break;
     case 'MONEY_COLLECT':
       description = `Admin collected Rs. ${data.owner.amount} from ${data.owner.name}`

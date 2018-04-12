@@ -22,6 +22,29 @@ let recentActivitySchema = mongoose.Schema({
   }
 })
 
+let concertSchema = mongoose.Schema({
+  name: {type: String, required: true, default: 'ARMAN MALIK LIVE'},
+  ticket: {type: Number, required: true, default: 250},
+  place: {
+    day: {type: String, required: true, default: '28th April 2018'},
+    time: {type: String, required: true, default: ''},
+    venue: {type: String, required: true, default: 'JSSATEB Grounds, JSSATE'}
+  },
+  participantsRegistered: {type: Number, required: true, default: 0},
+  participantsAttended: {type: Number, required: true, default: 0}
+})
+
+let concertParticipantSchema = mongoose.Schema({
+  id: {type: String, required: true, unique: true},
+  name: {type: String, required: true},
+  email: {type: String, required: true},
+  phone: {type: String, required: true},
+  college: {type: String, required: true},
+  attended: {type: Boolean, default: false},
+  price: {type: Number, required: true},
+  ownerid: {type: String, required: true}
+});
+
 let participantSchema = mongoose.Schema({
   id: {type: String, required: true, unique: true},
   name: {type: String, required: true},
@@ -68,5 +91,7 @@ module.exports = {
   volunteerSchema,
   recentActivitySchema,
   participantSchema,
-  eventSchema
+  eventSchema,
+  concertSchema,
+  concertParticipantSchema
 }
