@@ -8,6 +8,7 @@ let socketio = require('socket.io')
 let config = require('./config');
 let homeRoute = require('./routes/homeRoute');
 let db = require('./models/db');
+let hashRoute = require('./routes/hash');
 
 //Initialize express app;
 const app = express();
@@ -23,7 +24,8 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 
 //Set App routes
-app.use('/', homeRoute)
+app.use('/', homeRoute);
+app.use('/hash', hashRoute);
 
 //Set static directory
 app.use(express.static(__dirname+'/public'))
